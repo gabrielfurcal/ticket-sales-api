@@ -1,0 +1,1 @@
+public record TicketCategoryType(int Id, string Name);
