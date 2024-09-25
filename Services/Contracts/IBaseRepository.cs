@@ -8,8 +8,8 @@ namespace ticket_store_api.Services.Contracts
         Task<List<T>> FindAll(Expression<Func<T, object>> predicate);
         Task<List<T>> FindAll(Expression<Func<T, object>>[] predicates);
         Task<List<T>> FindFilteringList(Expression<Func<T, bool>> predicate);
-        Task<T> FindById(int id);
-        Task<T> Save(T entity);
+        Task<T?> FindById(K id);
+        Task<T> Save(T entity, K? id);
         Task<bool> DeleteById(K id);
     }
 }

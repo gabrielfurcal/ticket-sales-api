@@ -7,28 +7,34 @@ namespace ticket_store_api.Models
     public class Transaction
     {
         [Key]
-        public Guid Id {get;set;}
+        [Column("Transaction_ID")]
+        public Guid Id { get; set; }
 
-        public DateTime RegisteredAt {get;set;}
+        [Column("Registered_At")]
+        public DateTime RegisteredAt { get; set; }
 
-        public required string Method {get;set;}
+        public required string Method { get; set; }
 
-        public decimal Amount {get;set;}
+        public decimal Amount { get; set; }
 
-        public string? CardHolderName {get;set;}
+        [Column("Cardholder_Name")]
+        public string? CardHolderName { get; set; }
 
+        [Column("Card_Number")]
         [StringLength(16)]
-        public string? CardNumber {get;set;}
+        public string? CardNumber { get; set; }
 
-        public int? CardExpirationDateMonth {get;set;}
+        [Column("Expiration_Month")]
+        public short? CardExpirationMonth { get; set; }
 
-        public int? CardExpirationDateYear {get;set;}
+        [Column("Expiration_Year")]
+        public short? CardExpirationYear { get; set; }
 
-        public int? CVV {get;set;}
+        public short? CVV { get; set; }
 
-        [ForeignKey("userCardId")]
-        public int? UserCardId {get;set;}
+        [ForeignKey("User_Card_ID")]
+        public int? UserCardId { get; set; }
 
-        public virtual required UserCard UserCard {get;set;}
+        public virtual UserCard? UserCard { get; set; }
     }
 }

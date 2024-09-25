@@ -7,7 +7,9 @@ namespace ticket_store_api.Models
     public class TicketCategory
     {
         [Key]
-        public int Id {get;set;}
-        public required string Name {get;set;}
+        [Column("Ticket_Cat_ID")]
+        public int Id { get; set; }
+
+        public required string Name { get; set; }
     }
 }
