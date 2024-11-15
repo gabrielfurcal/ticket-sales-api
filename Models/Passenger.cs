@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using ticket_store_api.Models.Externals;
 
 namespace ticket_store_api.Models
 {
@@ -9,7 +8,7 @@ namespace ticket_store_api.Models
     {
         [Key]
         [Column("Passenger_ID")]
-        public long Id { get; set; }
+        public long? Id { get; set; }
 
         [Column("First_Name")]
         public required string FirstName { get; set; }
@@ -20,7 +19,8 @@ namespace ticket_store_api.Models
         [Column("Birth_Date")]
         public DateTime BirthDate {get; set;}
 
-        public char Gender { get; set; }
+        [StringLength(1)]
+        public required string Gender { get; set; }
 
         public required string Email { get; set; }
 
@@ -40,6 +40,6 @@ namespace ticket_store_api.Models
         [Column("City_ID")]
         public int? CityId { get; set; }
 
-        public virtual City? City { get; set; }
+        public virtual Externals.City? City { get; set; }
     }
 }

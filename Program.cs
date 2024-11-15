@@ -11,13 +11,19 @@ var configuration = builder.Configuration;
 string? connectionString = configuration.GetConnectionString("connectionString") ?? "";
 
 builder.Services
+    .AddAutoMapper(typeof(Program))
     .AddPooledDbContextFactory<TicketSaleDbContext>(o => 
         o.UseMySQL(connectionString)
     )
-    .AddScoped<ITicketCategoryRepository, TicketCategoryRepository>()
+    .AddScoped<ITicketCategoryService, TicketCategoryService>()
+    .AddScoped<IPassengerService, PassengerService>()
     .AddGraphQLServer()
     .AddQueryType<Query>()
-    .AddMutationType<Mutation>();
+    .AddTypeExtension<TicketCategoryQueries>()
+    .AddTypeExtension<PassengerQueries>()
+    .AddMutationType<Mutation>()
+    .AddTypeExtension<TicketCategoryMutations>()
+    .AddTypeExtension<PassengerMutations>();
 
 var app = builder.Build();
 

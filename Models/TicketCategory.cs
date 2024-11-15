@@ -8,7 +8,7 @@ namespace ticket_store_api.Models
     {
         [Key]
         [Column("Ticket_Cat_ID")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         public required string Name { get; set; }
     }

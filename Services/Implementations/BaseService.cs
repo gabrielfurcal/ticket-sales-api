@@ -1,31 +1,30 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http.Features;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ticket_store_api.Services.Contracts;
 
 namespace ticket_store_api.Services.Implementations
 {
-    public class BaseRepository<T, K> : IBaseRepository<T, K> where T : class
+    public class BaseService<T, K, M> : IBaseService<T, K, M> where T : class
     {
         private readonly IDbContextFactory<TicketSaleDbContext> _contextFactory;
+        private readonly IMapper _mapper;
 
-        public BaseRepository(IDbContextFactory<TicketSaleDbContext> contextFactory)
+        public BaseService(IDbContextFactory<TicketSaleDbContext> contextFactory, IMapper mapper)
         {
             this._contextFactory = contextFactory;
+            this._mapper = mapper;
         }
 
-        public async Task<List<T>> FindAll()
+        public async Task<List<M>> FindAll()
         {
             try 
             {
                 using(TicketSaleDbContext _context = _contextFactory.CreateDbContext())
                 {
                     var entities = await _context.Set<T>().ToListAsync();
-                    return entities;
+                    var listResponse = entities.Select(e => _mapper.Map<T, M>(e)).ToList();
+                    return listResponse;
                 }
             } catch (Exception ex) 
             {
@@ -34,15 +33,16 @@ namespace ticket_store_api.Services.Implementations
             }
         }
 
-        public async Task<List<T>> FindAll(Expression<Func<T, object>> predicate)
+        public async Task<List<M>> FindAll(Expression<Func<T, object>> predicate)
         {
             try
             {
                 using(TicketSaleDbContext _context = _contextFactory.CreateDbContext())
                 {
-                    var entities = _context.Set<T>().Include(predicate).ToListAsync();
+                    var entities = await _context.Set<T>().Include(predicate).ToListAsync();
+                    var listResponse = entities.Select(e => _mapper.Map<T, M>(e)).ToList();
 
-                    return await entities;
+                    return listResponse;
                 }
             }
             catch (Exception ex)
@@ -52,7 +52,7 @@ namespace ticket_store_api.Services.Implementations
             }
         }
 
-        public async Task<List<T>> FindAll(Expression<Func<T, object>>[] predicates)
+        public async Task<List<M>> FindAll(Expression<Func<T, object>>[] predicates)
         {
             try
             {
@@ -65,7 +65,10 @@ namespace ticket_store_api.Services.Implementations
                         entities = entities.Include(item);
                     }
 
-                    return await entities.ToListAsync();
+                    var entitiesList = await entities.ToListAsync();
+                    var listResponse = entities.Select(e => _mapper.Map<T, M>(e)).ToList();
+
+                    return listResponse;
                 }
             }
             catch (Exception ex)
@@ -75,15 +78,16 @@ namespace ticket_store_api.Services.Implementations
             }
         }
 
-        public async Task<List<T>> FindFilteringList(Expression<Func<T, bool>> predicate)
+        public async Task<List<M>> FindFilteringList(Expression<Func<T, bool>> predicate)
         {
             try
             {
                 using(TicketSaleDbContext _context = _contextFactory.CreateDbContext())
                 {
                     var entities = await _context.Set<T>().Where(predicate).ToListAsync();
+                    var listResponse = entities.Select(e => _mapper.Map<T, M>(e)).ToList();
 
-                    return entities;
+                    return listResponse;
                 }
             }
             catch (Exception ex)
@@ -93,14 +97,18 @@ namespace ticket_store_api.Services.Implementations
             }
         }
 
-        public async Task<T?> FindById(K id)
+        public async Task<M> FindById(K id)
         {
             try
             {
                 using(TicketSaleDbContext _context = _contextFactory.CreateDbContext())
                 {
                     var entity = await _context.Set<T>().FindAsync(id);
-                    return entity;
+
+                    if (entity is null) throw new Exception($"{nameof(T)} not found");
+
+                    return _mapper.Map<T, M>(entity);
+
                 }
             }
             catch (Exception ex)
@@ -111,26 +119,25 @@ namespace ticket_store_api.Services.Implementations
         }
 
 
-        public async Task<T> Save(T entity, K? id)
+        public async Task<M> Save(M dto, K? id)
         {
             try
             {
                 using(TicketSaleDbContext _context = _contextFactory.CreateDbContext())
                 {
-                    var dbEntity = await _context.Set<T>().FindAsync(id);
+                    var entity = _mapper.Map<M, T>(dto);
 
-                    if (dbEntity != null)
-                    {
-                        _context.Entry(entity).State = EntityState.Modified;
-                    }
+                    if (id is null) await _context.Set<T>().AddAsync(entity);
                     else
                     {
-                        await _context.Set<T>().AddAsync(entity);
+                        // var dbEntity = await FindById(id);
+                        // if(dbEntity is not null) 
+                            _context.Entry(entity).State = EntityState.Modified;
                     }
 
                     await _context.SaveChangesAsync();
 
-                    return entity;
+                    return _mapper.Map<T, M>(entity);
                 }
             }
             catch (Exception ex)
@@ -151,6 +158,7 @@ namespace ticket_store_api.Services.Implementations
                     if (entity != null)
                     {
                         _context.Set<T>().Remove(entity);
+                        await _context.SaveChangesAsync();
 
                         return true;
                     }

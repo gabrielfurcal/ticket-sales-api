@@ -8,7 +8,7 @@ namespace ticket_store_api.Models
     {
         [Key]
         [Column("Ticket_Type_ID")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [ForeignKey("Ticket_Cat_ID")]
         public int TicketCategoryId { get; set; }
