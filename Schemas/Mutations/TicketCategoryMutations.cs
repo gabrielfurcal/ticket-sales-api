@@ -1,21 +1,27 @@
+using AutoMapper;
 using ticket_store_api.DTOs;
+using ticket_store_api.Schemas.Types;
 using ticket_store_api.Services.Contracts;
 
 namespace ticket_store_api.Schemas.Mutations
 {
-    [ExtendObjectType(typeof(Mutation))]
+    [ExtendObjectType("Mutation")]
     public class TicketCategoryMutations
     {
         private readonly ITicketCategoryService _ticketCategoryService;
+        private readonly IMapper _mapper;
 
-        public TicketCategoryMutations(ITicketCategoryService ticketCategoryService)
+        public TicketCategoryMutations(ITicketCategoryService ticketCategoryService, IMapper mapper)
         {
             this._ticketCategoryService = ticketCategoryService;
+            this._mapper = mapper;
         }
 
-        public async Task<TicketCategoryDTO?> SaveTicketCategory(TicketCategoryDTO ticketCategory)
+        public async Task<TicketCategoryType?> SaveTicketCategory(TicketCategoryInputType ticketCategory)
         {
-            return await _ticketCategoryService.Save(ticketCategory, ticketCategory.Id);
+            TicketCategoryDTO dtoTicketCategory = await _ticketCategoryService
+                .Save(_mapper.Map<TicketCategoryInputType, TicketCategoryDTO>(ticketCategory), ticketCategory.Id);
+            return _mapper.Map<TicketCategoryDTO, TicketCategoryType>(dtoTicketCategory);
         }
 
         public async Task<bool> DeleteTicketCategory(int id)

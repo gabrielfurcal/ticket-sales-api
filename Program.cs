@@ -1,9 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using ticket_store_api.Schemas.Mutations;
-using ticket_store_api.Schemas.Queries;
 using ticket_store_api.Services;
 using ticket_store_api.Services.Contracts;
 using ticket_store_api.Services.Implementations;
+using ticket_store_api.Schemas;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -17,17 +16,14 @@ builder.Services
     )
     .AddScoped<ITicketCategoryService, TicketCategoryService>()
     .AddScoped<IPassengerService, PassengerService>()
-    .AddGraphQLServer()
-    .AddQueryType<Query>()
-    .AddTypeExtension<TicketCategoryQueries>()
-    .AddTypeExtension<PassengerQueries>()
-    .AddMutationType<Mutation>()
-    .AddTypeExtension<TicketCategoryMutations>()
-    .AddTypeExtension<PassengerMutations>();
+    .AddScoped<ITicketTypeService, TicketTypeService>()
+    .AddScoped<IUserCardService, UserCardService>()
+    .AddGraphQLTypes();
+
 
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+app.MapGet("/", () => "Ticket Sales API");
 app.MapGraphQL();
 
 // using(IServiceScope scope = app.Services.CreateScope())

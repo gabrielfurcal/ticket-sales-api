@@ -10,8 +10,9 @@ namespace ticket_store_api.Models
         [Column("Ticket_Type_ID")]
         public int? Id { get; set; }
 
-        [ForeignKey("Ticket_Cat_ID")]
-        public int TicketCategoryId { get; set; }
+        [ForeignKey("TicketCategoryId")]
+        [Column("Ticket_Cat_ID")]
+        public int? TicketCategoryId { get; set; }
 
         [Column("Sale_Price")]
         public decimal SalePrice { get; set; }
@@ -20,9 +21,9 @@ namespace ticket_store_api.Models
         public decimal? DiscountPercentage { get; set; }
 
         [Column("Route_ID")]
-        public int RouteId { get; set; }
+        public int? RouteId { get; set; }
 
-        public virtual required TicketCategory TicketCategory { get; set; }
+        public virtual TicketCategory? TicketCategory { get; set; }
         
         public virtual Externals.Route? Route { get; set; }
     }

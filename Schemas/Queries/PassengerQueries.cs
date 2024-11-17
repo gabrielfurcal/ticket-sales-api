@@ -1,27 +1,34 @@
+using AutoMapper;
 using ticket_store_api.DTOs;
+using ticket_store_api.Schemas.Types;
 using ticket_store_api.Services.Contracts;
 
 namespace ticket_store_api.Schemas.Queries
 {
-    [ExtendObjectType(typeof(Query))]
+    [ExtendObjectType("Query")]
     public class PassengerQueries
     {
         private readonly IPassengerService _passengerService;
+        private readonly IMapper _mapper;
 
-        public PassengerQueries(IPassengerService passengerService)
+        public PassengerQueries(IPassengerService passengerService, IMapper mapper)
         {
             this._passengerService = passengerService;
+            this._mapper = mapper;
         }
         
 
-        public async Task<List<PassengerDTO>> GetPassengers()
+        public async Task<List<PassengerType>> GetPassengers()
         {
-            return await _passengerService.FindAll();
+            List<PassengerDTO> dtoPassengers = await _passengerService.FindAll();
+
+            return dtoPassengers.Select(p => _mapper.Map<PassengerDTO, PassengerType>(p)).ToList();
         }
 
-        public async Task<PassengerDTO?> GetPassengerById(long id)
+        public async Task<PassengerType?> GetPassengerById(long id)
         {
-            return await _passengerService.FindById(id);
+            PassengerDTO dtoPassenger = await _passengerService.FindById(id);
+            return _mapper.Map<PassengerDTO, PassengerType>(dtoPassenger);
 
         }
     }

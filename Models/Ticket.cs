@@ -10,7 +10,7 @@ namespace ticket_store_api.Models
     {
         [Key]
         [Column("Ticket_ID")]
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
 
         public required string Seat { get; set; }
 

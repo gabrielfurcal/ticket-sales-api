@@ -1,28 +1,29 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
 using ticket_store_api.DTOs;
+using ticket_store_api.Schemas.Types;
 using ticket_store_api.Services.Contracts;
 
 namespace ticket_store_api.Schemas.Mutations
 {
-    [ExtendObjectType(typeof(Mutation))]
+    [ExtendObjectType("Mutation")]
     public class PassengerMutations
     {
         private readonly IPassengerService _passengerService;
+        private readonly IMapper _mapper;
 
-        public PassengerMutations(IPassengerService passengerService)
+        public PassengerMutations(IPassengerService passengerService, IMapper mapper)
         {
             this._passengerService = passengerService;
+            this._mapper = mapper;
         }
 
-        public async Task<PassengerDTO?> SavePassenger(PassengerDTO passenger)
+        public async Task<PassengerType?> SavePassenger(PassengerInputType passenger)
         {
-            return await _passengerService.Save(passenger, passenger.Id);
+            PassengerDTO dtoPassenger = await _passengerService.Save(_mapper.Map<PassengerInputType, PassengerDTO>(passenger), passenger.Id);
+            return _mapper.Map<PassengerDTO, PassengerType>(dtoPassenger);
         }
 
-        public async Task<bool> DeletePassenger(long id)
+        public async Task<bool> DeletePassenger(long id) 
         {
             return await _passengerService.DeleteById(id);
         }

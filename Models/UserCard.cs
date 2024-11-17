@@ -9,7 +9,7 @@ namespace ticket_store_api.Models
     {
         [Key] 
         [Column("User_Card_ID")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Column("Cardholder_Name")]
         public required string CardHolderName { get; set; }
@@ -25,8 +25,7 @@ namespace ticket_store_api.Models
         public short ExpirationYear { get; set; }
 
         public short CVV { get; set; }
-        
-        // [ForeignKey("userId")]
+
         [Column("User_ID")]
         public int UserId { get; set; }
 

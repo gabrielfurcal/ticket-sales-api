@@ -1,6 +1,7 @@
 using AutoMapper;
 using ticket_store_api.DTOs;
 using ticket_store_api.Models;
+using ticket_store_api.Schemas.Types;
 
 namespace ticket_store_api.Profiles 
 {
@@ -10,6 +11,12 @@ namespace ticket_store_api.Profiles
         {
             CreateMap<TicketCategory, TicketCategoryDTO>();
             CreateMap<TicketCategoryDTO, TicketCategory>();
+
+            CreateMap<TicketCategoryType, TicketCategoryDTO>();
+            CreateMap<TicketCategoryDTO, TicketCategoryType>();
+
+            CreateMap<TicketCategoryInputType, TicketCategoryDTO>();
+            CreateMap<TicketCategoryDTO, TicketCategoryInputType>();
         }
     }
 }
