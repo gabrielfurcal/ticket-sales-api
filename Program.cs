@@ -14,12 +14,13 @@ builder.Services
     .AddPooledDbContextFactory<TicketSaleDbContext>(o => 
         o.UseMySQL(connectionString)
     )
+    .AddGraphQLTypes()
     .AddScoped<ITicketCategoryService, TicketCategoryService>()
     .AddScoped<IPassengerService, PassengerService>()
     .AddScoped<ITicketTypeService, TicketTypeService>()
     .AddScoped<IUserCardService, UserCardService>()
-    .AddGraphQLTypes();
-
+    .AddScoped<ITicketService, TicketService>()
+    .Addticket_sales_api().ConfigureHttpClient(c => c.BaseAddress = new Uri("http://localhost:8080/graphql"));
 
 var app = builder.Build();
 

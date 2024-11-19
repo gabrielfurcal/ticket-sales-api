@@ -1,0 +1,13 @@
+query GetScheduleById($id: Int) {
+    scheduleById(id: $id) {
+        id
+        train {
+            type
+        }
+        departureTime
+        arrivalTime
+        status {
+            name
+        }
+    }
+}

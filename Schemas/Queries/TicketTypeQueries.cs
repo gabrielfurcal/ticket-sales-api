@@ -5,7 +5,7 @@ using ticket_store_api.Services.Contracts;
 
 namespace ticket_store_api.Schemas.Queries
 {
-    [ExtendObjectType("Query")]
+    [ExtendObjectType(nameof(BaseQueries))]
     public class TicketTypeQueries
     {
         private readonly ITicketTypeService _ticketTypeService;

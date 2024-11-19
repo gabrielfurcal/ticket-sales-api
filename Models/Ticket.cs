@@ -14,16 +14,19 @@ namespace ticket_store_api.Models
 
         public required string Seat { get; set; }
 
-        [ForeignKey("Passenger_ID")]
+        [Column("Passenger_ID")]
+        [ForeignKey("PassengerId")]
         public required long PassengerId { get; set; }
 
-        [ForeignKey("Ticket_Type_ID")]
+        [Column("Ticket_Type_ID")]
+        [ForeignKey("TicketTypeId")]
         public required int TicketTypeId { get; set; }
         
         [Column("Schedule_ID")]
         public int ScheduleId { get; set; }
 
-        [ForeignKey("Transaction_ID")]
+        [Column("Transaction_ID")]
+        [ForeignKey("TransactionId")]
         public Guid TransactionId { get; set; }
 
         public bool Checked { get; set; }

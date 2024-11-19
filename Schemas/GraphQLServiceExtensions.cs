@@ -6,7 +6,7 @@ namespace ticket_store_api.Schemas
 {
     public static class GraphQLServiceExtensions
     {
-        public static IRequestExecutorBuilder AddGraphQLTypes(this IServiceCollection services)
+        public static IServiceCollection AddGraphQLTypes(this IServiceCollection services)
         {
             var setup = services
                 .AddGraphQLServer()
@@ -17,7 +17,8 @@ namespace ticket_store_api.Schemas
                 .AddDocumentFromFile(@"./Schemas/schema.graphql");
 
             //Queries
-            setup = setup        
+            setup = setup
+                .AddQueryType<BaseQueries>()        
                 .AddTypeExtension<TicketCategoryQueries>()
                 .AddTypeExtension<PassengerQueries>()
                 .AddTypeExtension<TicketTypeQueries>()
@@ -27,6 +28,7 @@ namespace ticket_store_api.Schemas
 
             //Mutations
             setup = setup
+                .AddMutationType<BaseMutations>()
                 .AddTypeExtension<TicketCategoryMutations>()
                 .AddTypeExtension<PassengerMutations>()
                 .AddTypeExtension<TicketTypeMutations>()
@@ -34,7 +36,7 @@ namespace ticket_store_api.Schemas
                 .AddTypeExtension<TransactionMutations>()
                 .AddTypeExtension<TicketMutations>();
 
-            return setup;
+            return setup.Services;
         }
     }
 }

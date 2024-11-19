@@ -1,5 +1,6 @@
 using AutoMapper;
 using ticket_store_api.DTOs;
+using ticket_store_api.Models.Externals;
 using ticket_store_api.Services.Contracts;
 
 namespace ticket_store_api.Schemas.Types
@@ -49,5 +50,17 @@ namespace ticket_store_api.Schemas.Types
 
         [GraphQLIgnore]
         public required int ScheduleId { get; set; }
+
+        public async Task<Schedule> Schedule([Service] GetScheduleByIdQuery query, [Service] IMapper _mapper)
+        {
+            var result = await query.ExecuteAsync(this.ScheduleId);
+            var schedule = result.Data?.ScheduleById!;
+            return new Schedule()
+            {
+                Id = Convert.ToInt32(schedule.Id),
+                ArrivalTime = schedule.ArrivalTime!,
+                DepartureTime = schedule.DepartureTime!
+            };
+        }
     }
 }

@@ -1,3 +1,4 @@
+using AutoMapper;
 using ticket_store_api.Models.Externals;
 
 namespace ticket_store_api.Schemas.Types
@@ -16,12 +17,24 @@ namespace ticket_store_api.Schemas.Types
         public required string Address { get; set; }
         public required string Unit { get; set; }
         public required string PostalCode { get; set; }
+
+        [GraphQLIgnore]
         public int CityId { get; set; }
 
-        //TO-DO
-        // public City City()
-        // {
-        //     return null;
-        // }
+        public async Task<CityType> City([Service] GetCitiyByIdQuery query)
+        {
+            var result = await query.ExecuteAsync(this.CityId);
+            var city = result.Data?.CityById;
+
+            var cityType = new CityType() 
+            {
+                Id = Convert.ToInt32(city!.Id),
+                City = city.City,
+                Province = city.Province,
+                Country = city.Country
+            };
+
+            return cityType;
+        }
     }
 }

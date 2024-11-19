@@ -1,0 +1,13 @@
+query GetSchedules {
+    schedules {
+        id
+        train {
+            type
+        }
+        departureTime
+        arrivalTime
+        status {
+            name
+        }
+    }
+}

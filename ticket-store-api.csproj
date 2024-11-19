@@ -16,7 +16,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="MySql.EntityFrameworkCore" Version="8.0.5" />
+    <PackageReference Include="StrawberryShake.Core" Version="14.1.0" />
+    <PackageReference Include="StrawberryShake.Server" Version="14.1.0" />
+    <PackageReference Include="StrawberryShake.Transport.Http" Version="14.1.0" />
   </ItemGroup>
 
 </Project>
