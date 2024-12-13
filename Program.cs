@@ -8,19 +8,20 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 string? connectionString = configuration.GetConnectionString("connectionString") ?? "";
+string? adminInputsGraphQLUrl = configuration["Environments:AdminInputGraphQLUrl"];
 
 builder.Services
     .AddAutoMapper(typeof(Program))
     .AddPooledDbContextFactory<TicketSaleDbContext>(o => 
         o.UseMySQL(connectionString)
     )
-    .AddGraphQLTypes()
     .AddScoped<ITicketCategoryService, TicketCategoryService>()
     .AddScoped<IPassengerService, PassengerService>()
     .AddScoped<ITicketTypeService, TicketTypeService>()
     .AddScoped<IUserCardService, UserCardService>()
     .AddScoped<ITicketService, TicketService>()
-    .Addticket_sales_api().ConfigureHttpClient(c => c.BaseAddress = new Uri("http://localhost:8080/graphql"));
+    .AddGraphQLTypes()
+    .Addticket_sales_api().ConfigureHttpClient(c => c.BaseAddress = new Uri(adminInputsGraphQLUrl!));
 
 var app = builder.Build();
 

@@ -1,5 +1,6 @@
 using AutoMapper;
 using ticket_store_api.DTOs;
+using ticket_store_api.GraphQL.External.Types;
 using ticket_store_api.Services.Contracts;
 
 namespace ticket_store_api.GraphQL.Schema.Types

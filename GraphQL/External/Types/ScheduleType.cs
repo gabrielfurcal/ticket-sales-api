@@ -1,4 +1,4 @@
-namespace ticket_store_api.GraphQL.Schema.Types
+namespace ticket_store_api.GraphQL.External.Types
 {
     public class ScheduleType
     {

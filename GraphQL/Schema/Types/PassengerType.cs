@@ -1,4 +1,5 @@
 using AutoMapper;
+using ticket_store_api.GraphQL.External.Types;
 
 namespace ticket_store_api.GraphQL.Schema.Types
 {
