@@ -1,8 +1,0 @@
-query GetCitiyById($id: Int) {
-    cityById(id: $id) {
-        id,
-        city,
-        province,
-        country
-    }
-}

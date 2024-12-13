@@ -1,0 +1,78 @@
+query GetCityById($id: Int) {
+    cityById(id: $id) {
+        id
+        city
+        province
+        country
+    }
+}
+
+query GetStatusById($id: Int) {
+    statusById(id: $id) {
+        id
+        name
+        description
+    }
+}
+
+query GetStationById($id: Int) {
+    stationById(id: $id) {
+        id
+        name
+        countryCode
+        phone
+        postalCode
+        latitude
+        longitude
+    }
+}
+
+query GetScheduleById($id: Int) {
+    scheduleById(id: $id) {
+        id
+        train {
+            type
+        }
+        departureTime
+        arrivalTime
+        status {
+            name
+        }
+    }
+}
+
+query GetSchedules {
+    schedules {
+        id
+        train {
+            type
+        }
+        departureTime
+        arrivalTime
+        status {
+            name
+        }
+    }
+}
+
+query GetTrainById($id: Int) {
+    trainById(id: $id) {
+        id
+        type
+        capacity
+        maxSpeed
+    }
+}
+
+query GetRouteById($id: Int) {
+    routeById(id: $id) {
+        id,
+        startStation {
+            name
+        }
+        endStation {
+            name
+        }
+        distance
+    }
+}

@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using ticket_store_api.Models.Externals;
 
 namespace ticket_store_api.Models
 {
@@ -28,7 +27,5 @@ namespace ticket_store_api.Models
 
         [Column("User_ID")]
         public int UserId { get; set; }
-
-        public virtual User? User { get; set; }
     }
 }

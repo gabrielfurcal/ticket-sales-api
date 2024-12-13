@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using ticket_store_api.Services;
 using ticket_store_api.Services.Contracts;
 using ticket_store_api.Services.Implementations;
-using ticket_store_api.Schemas;
+using ticket_store_api.GraphQL.Schema;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;

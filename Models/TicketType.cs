@@ -24,7 +24,5 @@ namespace ticket_store_api.Models
         public int? RouteId { get; set; }
 
         public virtual TicketCategory? TicketCategory { get; set; }
-        
-        public virtual Externals.Route? Route { get; set; }
     }
 }

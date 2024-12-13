@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using ticket_store_api.Models.Externals;
 
 namespace ticket_store_api.Models
 {
@@ -34,6 +33,5 @@ namespace ticket_store_api.Models
         public virtual required Passenger Passenger { get; set; }
         public virtual required TicketType TicketType { get; set; }
         public virtual required Transaction Transaction { get; set; }
-        public virtual Schedule? Schedule { get; set; }
     }
 }

@@ -39,7 +39,5 @@ namespace ticket_store_api.Models
 
         [Column("City_ID")]
         public int? CityId { get; set; }
-
-        public virtual Externals.City? City { get; set; }
     }
 }

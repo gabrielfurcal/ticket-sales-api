@@ -1,6 +1,7 @@
 using AutoMapper;
 using ticket_store_api.DTOs;
-using ticket_store_api.Schemas.Types;
+using ticket_store_api.GraphQL.Schema.Types;
+using ticket_store_api.GraphQL.Schema.InputTypes;
 
 namespace ticket_store_api.Profiles
 {
