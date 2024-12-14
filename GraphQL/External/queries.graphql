@@ -38,6 +38,14 @@ query GetScheduleById($id: Int) {
         status {
             name
         }
+        route {
+            startStation {
+                name
+            }
+            endStation {
+                name
+            }
+        }
     }
 }
 

@@ -5,5 +5,5 @@ using System.Threading.Tasks;
 
 namespace ticket_store_api.DTOs.Externals
 {
-    public record StationDTO(int Id, string Name, string CountryCode, string Phone, string PostalCode, string Latitude, string Longitude);
+    public record StationDTO(int Id, string Name, string CountryCode, string Phone, string PostalCode, float Latitude, float Longitude);
 }

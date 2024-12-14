@@ -1,9 +1,11 @@
 namespace ticket_store_api.GraphQL.External.Types
 {
+    [GraphQLName("Train")]
     public class TrainType
     {
-        public int Id { get; set; }
-        public required string Capacity { get; set; }
-        public required float maxSpeed { get; set; }
+        public int? Id { get; set; }
+        public string? Type { get; set; }
+        public string? Capacity { get; set; }
+        public float? maxSpeed { get; set; }
     }
 }

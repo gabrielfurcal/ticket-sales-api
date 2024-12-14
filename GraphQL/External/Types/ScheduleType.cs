@@ -1,19 +1,23 @@
 namespace ticket_store_api.GraphQL.External.Types
 {
+    [GraphQLName("Schedule")]
     public class ScheduleType
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [GraphQLIgnore]
-        public int TrainId { get; set; }
+        public int? TrainId { get; set; }
 
         [GraphQLIgnore]
-        public int RouteId { get; set; }
+        public int? RouteId { get; set; }
 
         [GraphQLIgnore]
-        public int StatusId { get; set; }
+        public int? StatusId { get; set; }
 
-        public required string DepartureTime { get; set; }
-        public required string ArrivalTime { get; set; }
+        public string? DepartureTime { get; set; }
+        public string? ArrivalTime { get; set; }
+        public TrainType? Train { get; set; }
+        public RouteType? Route { get; set; }
+        public StatusType? Status { get; set; }
     }
 }

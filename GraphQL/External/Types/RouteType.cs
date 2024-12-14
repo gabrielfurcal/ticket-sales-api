@@ -1,15 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace ticket_store_api.GraphQL.External.Types
 {
+    [GraphQLName("Route")]
     public class RouteType
     {
-        public int Id { get; set; }
-        public int StartStationId { get; set; }
-        public int EndStationId { get; set; }
-        public float Distance { get; set; }
+        public int? Id { get; set; }
+
+        [GraphQLIgnore]
+        public int? StartStationId { get; set; }
+
+        [GraphQLIgnore]
+        public int? EndStationId { get; set; }
+        
+        public float? Distance { get; set; }
+        public StationType? StartStation { get; set; }
+        public StationType? EndStation { get; set; }
     }
 }
