@@ -41,9 +41,11 @@ query GetScheduleById($id: Int) {
         route {
             startStation {
                 name
+                imageUrl
             }
             endStation {
                 name
+                imageUrl
             }
         }
     }

@@ -55,25 +55,7 @@ namespace ticket_store_api.GraphQL.Schema.Types
         {
             var result = await query.ExecuteAsync(this.ScheduleId);
             var schedule = result.Data?.ScheduleById!;
-            var scheduleType = new ScheduleType() 
-            {
-                Id = Convert.ToInt32(schedule.Id),
-                ArrivalTime = schedule.ArrivalTime,
-                DepartureTime = schedule.DepartureTime,
-                Route = new RouteType() 
-                { 
-                    StartStation = new StationType() { Name = schedule.Route!.StartStation!.Name },
-                    EndStation = new StationType() { Name = schedule.Route!.EndStation!.Name },
-                },
-                Train = new TrainType()
-                {
-                    Type = schedule.Train!.Type
-                },
-                Status = new StatusType()
-                {
-                    Name = schedule.Status!.Name
-                }
-            };
+            var scheduleType = _mapper.Map<IGetScheduleById_ScheduleById, ScheduleType>(schedule);
 
             return scheduleType;
         }

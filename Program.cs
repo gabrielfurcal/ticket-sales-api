@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 string? connectionString = configuration.GetConnectionString("connectionString") ?? "";
-string? adminInputsGraphQLUrl = configuration["Environments:AdminInputGraphQLUrl"];
+string? adminInputsApiGraphQLUrl = configuration["Environments:AdminInputsApiGraphQLUrl"];
 
 builder.Services
     .AddAutoMapper(typeof(Program))
@@ -21,13 +21,14 @@ builder.Services
     .AddScoped<IUserCardService, UserCardService>()
     .AddScoped<ITicketService, TicketService>()
     .AddGraphQLTypes()
-    .Addticket_sales_api().ConfigureHttpClient(c => c.BaseAddress = new Uri(adminInputsGraphQLUrl!));
+    .Addticket_sales_api().ConfigureHttpClient(c => c.BaseAddress = new Uri(adminInputsApiGraphQLUrl!));
 
 var app = builder.Build();
 
 app.MapGet("/", () => "Ticket Sales API");
 app.MapGraphQL();
 
+#region Initial Migrate Database
 // using(IServiceScope scope = app.Services.CreateScope())
 // {
 //     IDbContextFactory<TicketSaleDbContext> contextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<TicketSaleDbContext>>();
@@ -37,5 +38,6 @@ app.MapGraphQL();
 //         context.Database.Migrate();
 //     }
 // }
+#endregion
 
 app.Run();

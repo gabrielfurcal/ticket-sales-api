@@ -13,15 +13,25 @@ namespace ticket_store_api.Profiles
 
             // Route
             CreateMap<IGetRouteById_RouteById, RouteType>()
-                .ForMember(dest => dest.StartStation, act => act.MapFrom(src => src.StartStation))
-                .ForMember(dest => dest.EndStation, act => act.MapFrom(src => src.EndStation));
+                .ForMember(dest => dest.StartStation, act => act.MapFrom(src => new StationType 
+                { 
+                    Name = src.StartStation!.Name 
+                }))
+                .ForMember(dest => dest.EndStation, act => act.MapFrom(src => new StationType 
+                { 
+                    Name = src.EndStation!.Name 
+                }));
             CreateMap<RouteType, IGetRouteById_RouteById>();
 
             // Schedule
             CreateMap<IGetScheduleById_ScheduleById, ScheduleType>()
-                .ForMember(dest => dest.Route, act => act.MapFrom(src => src.Route))
-                .ForMember(dest => dest.Status, act => act.MapFrom(src => src.Status))
-                .ForMember(dest => dest.Train, act => act.MapFrom(src => src.Train));
+                .ForMember(dest => dest.Train, act => act.MapFrom(src => new TrainType { Type = src.Train!.Type }))
+                .ForMember(dest => dest.Status, act => act.MapFrom(src => new StatusType { Name = src.Status!.Name }))
+                .ForMember(dest => dest.Route, act => act.MapFrom(src => new RouteType 
+                { 
+                    StartStation = new StationType { Name = src.Route!.StartStation!.Name, imageUrl = src.Route!.StartStation!.ImageUrl },
+                    EndStation = new StationType { Name = src.Route!.EndStation!.Name, imageUrl = src.Route!.EndStation!.ImageUrl }
+                }));
 
             CreateMap<ScheduleType, IGetScheduleById_ScheduleById>(); 
 
