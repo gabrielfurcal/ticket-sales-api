@@ -110,7 +110,7 @@ type Station {
   postalCode: String!
   latitude: Float
   longitude: Float
-  cityId: Int!
+  city: City
   imageUrl: String
 }
 

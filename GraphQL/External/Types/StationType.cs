@@ -10,7 +10,12 @@ namespace ticket_store_api.GraphQL.External.Types
         public string? PostalCode { get; set; }
         public float? Latitude { get; set; }
         public float? Longitude { get; set; }
-        public int? cityId { get; set; }
-        public string? imageUrl { get; set; }
+
+        [GraphQLIgnore]
+        public int? CityId { get; set; }
+
+        public CityType? City { get; set; }
+
+        public string? ImageUrl { get; set; }
     }
 }

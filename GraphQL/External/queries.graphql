@@ -62,6 +62,24 @@ query GetSchedules {
         status {
             name
         }
+        route {
+            id
+            startStation {
+                name,
+                city {
+                    city,
+                    province
+                }
+            }
+            endStation {
+                name,
+                city {
+                    city,
+                    province
+                }
+            }
+            distance
+        }
     }
 }
 

@@ -1,4 +1,5 @@
 using HotChocolate.Execution.Configuration;
+using ticket_store_api.GraphQL.External.Queries;
 using ticket_store_api.GraphQL.Schema.Mutations;
 using ticket_store_api.GraphQL.Schema.Queries;
 
@@ -10,17 +11,18 @@ namespace ticket_store_api.GraphQL.Schema
         {
             var setup = services
                 .AddGraphQLServer();
-                // .AddDocumentFromFile(@"./Schemas/schema.graphql");
+            // .AddDocumentFromFile(@"./Schemas/schema.graphql");
 
             //Queries
             setup = setup
-                .AddQueryType<BaseQueries>()        
+                .AddQueryType<BaseQueries>()
                 .AddTypeExtension<TicketCategoryQueries>()
                 .AddTypeExtension<PassengerQueries>()
                 .AddTypeExtension<TicketTypeQueries>()
                 .AddTypeExtension<UserCardQueries>()
                 .AddTypeExtension<TransactionQueries>()
-                .AddTypeExtension<TicketQueries>();
+                .AddTypeExtension<TicketQueries>()
+                .AddTypeExtension<ScheduleQueries>();
 
             //Mutations
             setup = setup
