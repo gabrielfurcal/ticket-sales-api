@@ -32,7 +32,7 @@ builder.Services
     .AddScoped<IUserCardService, UserCardService>()
     .AddScoped<ITicketService, TicketService>()
     .AddGraphQLTypes()
-    .Addticket_sales_api().ConfigureHttpClient(c => c.BaseAddress = new Uri(adminInputsApiGraphQLUrl!));
+    .AddAdminInputs().ConfigureHttpClient(c => c.BaseAddress = new Uri(adminInputsApiGraphQLUrl!));
 
 var app = builder.Build();
 

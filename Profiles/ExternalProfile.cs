@@ -33,7 +33,7 @@ namespace ticket_store_api.Profiles
                     EndStation = new StationType { Name = src.Route!.EndStation!.Name, ImageUrl = src.Route!.EndStation!.ImageUrl }
                 }));
 
-            CreateMap<IGetSchedules_Schedules, ScheduleType>()
+            CreateMap<IGetSchedulesFiltered_SchedulesFiltered, ScheduleType>()
                 .ForMember(dest => dest.Train, act => act.MapFrom(src => new TrainType { Type = src.Train!.Type }))
                 .ForMember(dest => dest.Status, act => act.MapFrom(src => new StatusType { Name = src.Status!.Name }))
                 .ForMember(dest => dest.Route, act => act.MapFrom(src => new RouteType 
