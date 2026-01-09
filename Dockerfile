@@ -12,7 +12,7 @@ WORKDIR /app
 COPY ./publish .
 
 # Expose default ASP.NET Core port
-EXPOSE 8080
+EXPOSE 5000
 
 # Run the .NET application
 ENTRYPOINT ["./entrypoint.sh"]
