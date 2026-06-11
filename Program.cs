@@ -10,6 +10,17 @@ var configuration = builder.Configuration;
 string? connectionString = configuration.GetConnectionString("connectionString") ?? "";
 string? adminInputsApiGraphQLUrl = configuration["Environments:AdminInputsApiGraphQLUrl"];
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularApp",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 builder.Services
     .AddAutoMapper(typeof(Program))
     .AddPooledDbContextFactory<TicketSaleDbContext>(o => 
@@ -21,10 +32,11 @@ builder.Services
     .AddScoped<IUserCardService, UserCardService>()
     .AddScoped<ITicketService, TicketService>()
     .AddGraphQLTypes()
-    .Addticket_sales_api().ConfigureHttpClient(c => c.BaseAddress = new Uri(adminInputsApiGraphQLUrl!));
+    .AddAdminInputs().ConfigureHttpClient(c => c.BaseAddress = new Uri(adminInputsApiGraphQLUrl!));
 
 var app = builder.Build();
 
+app.UseCors("AllowAngularApp");
 app.MapGet("/", () => "Ticket Sales API");
 app.MapGraphQL();
 

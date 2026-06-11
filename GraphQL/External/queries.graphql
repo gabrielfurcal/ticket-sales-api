@@ -51,8 +51,8 @@ query GetScheduleById($id: Int) {
     }
 }
 
-query GetSchedules {
-    schedules {
+query GetSchedulesFiltered($startStationId: Int, $endStationId: Int, $startDate: String, $endDate: String, $passengers: Int) {
+    schedulesFiltered(startStationId: $startStationId, endStationId: $endStationId, startDate: $startDate, endDate: $endDate, passengers: $passengers) {
         id
         train {
             type
@@ -61,6 +61,24 @@ query GetSchedules {
         arrivalTime
         status {
             name
+        }
+        route {
+            id
+            startStation {
+                name,
+                city {
+                    city,
+                    province
+                }
+            }
+            endStation {
+                name,
+                city {
+                    city,
+                    province
+                }
+            }
+            distance
         }
     }
 }

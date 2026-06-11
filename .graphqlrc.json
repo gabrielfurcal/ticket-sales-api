@@ -3,8 +3,8 @@
   "documents": "**/*.graphql",
   "extensions": {
     "strawberryShake": {
-      "name": "ticket_sales_api",
-      "url": "http://localhost:8080/graphql",
+      "name": "AdminInputs",
+      "url": "http://192.168.2.20:8080/graphql",
       "records": {
         "inputs": false,
         "entities": false

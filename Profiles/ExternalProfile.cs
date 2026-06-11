@@ -29,8 +29,27 @@ namespace ticket_store_api.Profiles
                 .ForMember(dest => dest.Status, act => act.MapFrom(src => new StatusType { Name = src.Status!.Name }))
                 .ForMember(dest => dest.Route, act => act.MapFrom(src => new RouteType 
                 { 
-                    StartStation = new StationType { Name = src.Route!.StartStation!.Name, imageUrl = src.Route!.StartStation!.ImageUrl },
-                    EndStation = new StationType { Name = src.Route!.EndStation!.Name, imageUrl = src.Route!.EndStation!.ImageUrl }
+                    StartStation = new StationType { Name = src.Route!.StartStation!.Name, ImageUrl = src.Route!.StartStation!.ImageUrl },
+                    EndStation = new StationType { Name = src.Route!.EndStation!.Name, ImageUrl = src.Route!.EndStation!.ImageUrl }
+                }));
+
+            CreateMap<IGetSchedulesFiltered_SchedulesFiltered, ScheduleType>()
+                .ForMember(dest => dest.Train, act => act.MapFrom(src => new TrainType { Type = src.Train!.Type }))
+                .ForMember(dest => dest.Status, act => act.MapFrom(src => new StatusType { Name = src.Status!.Name }))
+                .ForMember(dest => dest.Route, act => act.MapFrom(src => new RouteType 
+                {
+                    Id = Convert.ToInt32(src.Route!.Id),
+                    Distance = (float) src.Route!.Distance!,
+                    StartStation = new StationType
+                    {
+                        Name = src.Route!.StartStation!.Name,
+                        City = new CityType { City = src.Route!.StartStation!.City!.City, Province = src.Route!.StartStation!.City!.Province }
+                    },
+                    EndStation = new StationType
+                    {
+                        Name = src.Route!.EndStation!.Name,
+                        City = new CityType { City = src.Route!.EndStation!.City!.City, Province = src.Route!.EndStation!.City!.Province }
+                    }
                 }));
 
             CreateMap<ScheduleType, IGetScheduleById_ScheduleById>(); 
