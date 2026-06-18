@@ -1,0 +1,20 @@
+{
+  "schema": "GraphQL/External/schema.graphql",
+  "documents": "**/*.graphql",
+  "extensions": {
+    "strawberryShake": {
+      "name": "AdminInputs",
+      "url": "http://192.168.2.20:8080/graphql",
+      "records": {
+        "inputs": false,
+        "entities": false
+      },
+      "transportProfiles": [
+        {
+          "default": "Http",
+          "subscription": "WebSocket"
+        }
+      ]
+    }
+  }
+}

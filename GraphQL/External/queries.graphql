@@ -1,0 +1,106 @@
+query GetCityById($id: Int) {
+    cityById(id: $id) {
+        id
+        city
+        province
+        country
+    }
+}
+
+query GetStatusById($id: Int) {
+    statusById(id: $id) {
+        id
+        name
+        description
+    }
+}
+
+query GetStationById($id: Int) {
+    stationById(id: $id) {
+        id
+        name
+        countryCode
+        phone
+        postalCode
+        latitude
+        longitude
+    }
+}
+
+query GetScheduleById($id: Int) {
+    scheduleById(id: $id) {
+        id
+        train {
+            type
+        }
+        departureTime
+        arrivalTime
+        status {
+            name
+        }
+        route {
+            startStation {
+                name
+                imageUrl
+            }
+            endStation {
+                name
+                imageUrl
+            }
+        }
+    }
+}
+
+query GetSchedulesFiltered($startStationId: Int, $endStationId: Int, $startDate: String, $endDate: String, $passengers: Int) {
+    schedulesFiltered(startStationId: $startStationId, endStationId: $endStationId, startDate: $startDate, endDate: $endDate, passengers: $passengers) {
+        id
+        train {
+            type
+        }
+        departureTime
+        arrivalTime
+        status {
+            name
+        }
+        route {
+            id
+            startStation {
+                name,
+                city {
+                    city,
+                    province
+                }
+            }
+            endStation {
+                name,
+                city {
+                    city,
+                    province
+                }
+            }
+            distance
+        }
+    }
+}
+
+query GetTrainById($id: Int) {
+    trainById(id: $id) {
+        id
+        type
+        capacity
+        maxSpeed
+    }
+}
+
+query GetRouteById($id: Int) {
+    routeById(id: $id) {
+        id,
+        startStation {
+            name
+        }
+        endStation {
+            name
+        }
+        distance
+    }
+}
