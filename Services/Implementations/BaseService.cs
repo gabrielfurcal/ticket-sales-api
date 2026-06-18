@@ -33,13 +33,13 @@ namespace ticket_store_api.Services.Implementations
             }
         }
 
-        public async Task<List<M>> FindAll(Expression<Func<T, object>> predicate)
+        public async Task<List<M>> FindAll(Expression<Func<T, object>> Predicate)
         {
             try
             {
                 using(TicketSaleDbContext _context = _contextFactory.CreateDbContext())
                 {
-                    var entities = await _context.Set<T>().Include(predicate).ToListAsync();
+                    var entities = await _context.Set<T>().Include(Predicate).ToListAsync();
                     var listResponse = entities.Select(e => _mapper.Map<T, M>(e)).ToList();
 
                     return listResponse;
@@ -52,7 +52,7 @@ namespace ticket_store_api.Services.Implementations
             }
         }
 
-        public async Task<List<M>> FindAll(Expression<Func<T, object>>[] predicates)
+        public async Task<List<M>> FindAll(Expression<Func<T, object>>[] Predicates)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace ticket_store_api.Services.Implementations
                 {
                     var entities = _context.Set<T>().AsQueryable();
 
-                    foreach (var item in predicates)
+                    foreach (var item in Predicates)
                     {
                         entities = entities.Include(item);
                     }
@@ -78,13 +78,13 @@ namespace ticket_store_api.Services.Implementations
             }
         }
 
-        public async Task<List<M>> FindFilteringList(Expression<Func<T, bool>> predicate)
+        public async Task<List<M>> FindFilteringList(Expression<Func<T, bool>> Predicate)
         {
             try
             {
                 using(TicketSaleDbContext _context = _contextFactory.CreateDbContext())
                 {
-                    var entities = await _context.Set<T>().Where(predicate).ToListAsync();
+                    var entities = await _context.Set<T>().Where(Predicate).ToListAsync();
                     var listResponse = entities.Select(e => _mapper.Map<T, M>(e)).ToList();
 
                     return listResponse;
@@ -97,13 +97,13 @@ namespace ticket_store_api.Services.Implementations
             }
         }
 
-        public async Task<M> FindById(K id)
+        public async Task<M> FindById(K Id)
         {
             try
             {
                 using(TicketSaleDbContext _context = _contextFactory.CreateDbContext())
                 {
-                    var entity = await _context.Set<T>().FindAsync(id);
+                    var entity = await _context.Set<T>().FindAsync(Id);
 
                     if (entity is null) throw new Exception($"{nameof(T)} not found");
 
@@ -113,21 +113,21 @@ namespace ticket_store_api.Services.Implementations
             }
             catch (Exception ex)
             {
-                Console.Write($"Error finding element of {nameof(T)}, with ID: {id}. Message: {ex.Message}");
+                Console.Write($"Error finding element of {nameof(T)}, with ID: {Id}. Message: {ex.Message}");
                 throw new Exception(ex.Message);
             }
         }
 
 
-        public async Task<M> Save(M dto, K? id)
+        public async Task<M> Save(M Dto, K? Id)
         {
             try
             {
                 using(TicketSaleDbContext _context = _contextFactory.CreateDbContext())
                 {
-                    var entity = _mapper.Map<M, T>(dto);
+                    var entity = _mapper.Map<M, T>(Dto);
 
-                    if (id is null) await _context.Set<T>().AddAsync(entity);
+                    if (Id is null) await _context.Set<T>().AddAsync(entity);
                     else
                     {
                         // var dbEntity = await FindById(id);
@@ -147,13 +147,13 @@ namespace ticket_store_api.Services.Implementations
             }
         }
 
-        public async Task<bool> DeleteById(K id)
+        public async Task<bool> DeleteById(K Id)
         {
             try
             {
                 using(TicketSaleDbContext _context = _contextFactory.CreateDbContext())
                 {
-                    var entity = await _context.Set<T>().FindAsync(id);
+                    var entity = await _context.Set<T>().FindAsync(Id);
                     
                     if (entity != null)
                     {
@@ -170,7 +170,7 @@ namespace ticket_store_api.Services.Implementations
             }
             catch (Exception ex)
             {
-                Console.Write($"Error deleting element of {nameof(T)}, with ID: {id}. Message: {ex.Message}");
+                Console.Write($"Error deleting element of {nameof(T)}, with ID: {Id}. Message: {ex.Message}");
                 throw new Exception(ex.Message);
             }
         }
